@@ -41,8 +41,9 @@ LAST-MODIFIED: tijdstip laatste wijziging van een event
 CREATED & LAST-MODIFIED worden door de applicatie ingevuld
 #>
 
-$games = Import-Csv $env:Temp\Wedstrijden.csv -Delimiter ';'
-foreach ( $game in $games )
+$games = Import-Csv $env:Temp\TTFrenoy\Wedstrijden.csv -Delimiter ';'
+$futuregames = $games.Where({[datetime]$_.datum -ge $(Get-Date)})
+foreach ( $game in $futuregames )
 {
     $startdate = [datetime]::parseexact($game.datum, 'd/MM/yyyy H:mm:ss', $null)
     $starttime = [datetime]::parseexact($game.beginuur, 'H:mm', $null)
